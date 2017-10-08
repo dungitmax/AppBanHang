@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.ltd.tandung.amazon_shopping.activity.Nha_DSActivity">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbarID"
+        android:background="@color/colorAccent"
+        app:titleTextColor="@color/white"
+        app:title="NHÀ CỬA-ĐỜI SỐNG"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
+    </android.support.v7.widget.Toolbar>
+    <ListView
+        android:id="@+id/lvID"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </ListView>
+</LinearLayout>

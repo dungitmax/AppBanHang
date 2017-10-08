@@ -1,0 +1,94 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp"
+    tools:context="com.ltd.tandung.amazon_shopping.DangNhap_DangKi.DangNhap">
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp">
+
+        <com.ltd.tandung.amazon_shopping.CustomView.ClearEditText
+            android:id="@+id/edtUsername"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Email/Số điện thoại" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp">
+
+        <com.ltd.tandung.amazon_shopping.CustomView.PassWordCustom
+            android:id="@+id/edtMK"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Mật khẩu"
+            app:useSkike="true"
+            app:useValidate="true" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <Button
+        android:id="@+id/btnDangNhap"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ec0909"
+        android:text="đăng nhập"
+        android:textColor="#ffff"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/txtQuenMK"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center_horizontal"
+        android:text="Quên mật khẩu?"
+        android:textColor="#10c3e2" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center_horizontal"
+        android:text="Hoặc đăng nhập bằng" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnFacebook"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/vienfacebook"
+            android:drawableLeft="@drawable/iconfacebook"
+            android:text="facebook"
+            android:textColor="#385edc"
+            android:textStyle="normal" />
+
+        <Button
+            android:id="@+id/btnGoogle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/viengoogle"
+            android:drawableLeft="@drawable/icongoogle"
+            android:text="google"
+            android:textColor="@color/colorGoogle"
+            android:textStyle="normal" />
+
+
+    </LinearLayout>
+</LinearLayout>

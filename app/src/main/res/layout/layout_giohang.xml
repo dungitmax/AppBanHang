@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v4.widget.DrawerLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbarGiohang"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="#1abef1"
+                app:title="Giỏ Hàng"
+                app:titleTextColor="#fff">
+
+            </android.support.v7.widget.Toolbar>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="320dp">
+
+                    <TextView
+                        android:textColor="@color/red"
+                        android:id="@+id/txtThongBao"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="GIỎ HÀNG TRỐNG!"
+                        android:textSize="30sp" />
+
+                    <ListView
+                        android:id="@+id/lvGiohang"
+                        android:layout_width="match_parent"
+                        android:layout_height="332dp"
+                        android:layout_above="@+id/linearLayout">
+                    </ListView>
+                </FrameLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/linearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:text="Thành tiền" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="right"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/txtTongTien"
+                                android:layout_width="200dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="right"
+                                android:gravity="right"
+                                android:textColor="#e53935"
+                                android:textSize="20dp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Đã bao gồm VAT" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/btnThanhtoan"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/background_inseart_product"
+                        android:text="THANH TOÁN GIỎ HÀNG"
+                        android:textColor="#ffff" />
+
+                    <Button
+                        android:id="@+id/btnMuahang"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/background_inseart_product"
+                        android:text="TIẾP TỤC MUA HÀNG"
+                        android:textColor="#ffff" />
+                </LinearLayout>
+            </RelativeLayout>
+        </LinearLayout>
+    </android.support.v4.widget.DrawerLayout>
+
+</LinearLayout>

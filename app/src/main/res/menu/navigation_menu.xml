@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:icon="@drawable/iconhome"
+            android:id="@+id/trangchu"
+            android:title="Trang chủ">
+        </item>
+        <item
+            android:id="@+id/tv_tk"
+            android:title="Tài Khoản">
+            <menu>
+                <item
+                    android:id="@+id/tv_tttk"
+                    android:icon="@drawable/icontaikhoan"
+                    android:title="Thông tin tài khoản" />
+                <item
+                    android:id="@+id/tv_dmk"
+                    android:icon="@drawable/changepassword"
+                    android:title="Đổi mật khẩu" />
+            </menu>
+        </item>
+        <item
+            android:id="@+id/tv_dsnh"
+            android:title="Danh sách ngành hàng">
+            <menu>
+                <item
+                    android:id="@+id/tv_bhth"
+                    android:icon="@drawable/iconstore"
+                    android:title="Bách hóa tổng hợp">
+
+                </item>
+                <item
+                    android:id="@+id/tv_ldsk"
+                    android:icon="@drawable/iconlamdep"
+                    android:title="Làm đẹp - Sức khỏe">
+
+                </item>
+                <item
+                    android:id="@+id/tv_mvb"
+                    android:icon="@drawable/iconmevabe"
+                    android:title="Mẹ và Bé">
+
+                </item>
+                <item
+                    android:id="@+id/tv_ncds"
+                    android:icon="@drawable/iconnhacuavsds"
+                    android:title="Nhà cửa-Đời sống">
+
+                </item>
+                <item
+                    android:id="@+id/tv_s"
+                    android:icon="@drawable/iconbook"
+                    android:title="Sách">
+
+                </item>
+                <item
+                    android:id="@+id/tv_tt"
+                    android:icon="@drawable/iconfashion"
+                    android:title="Thời trang">
+
+                </item>
+                <item
+                    android:id="@+id/tv_ddt"
+                    android:icon="@drawable/iconphone"
+                    android:title="Điện Thoại-Laptop">
+
+                </item>
+            </menu>
+        </item>
+        <item
+            android:title="Thông tin liên hệ">
+            <menu>
+                <item
+                    android:icon="@drawable/iconinformation"
+                    android:id="@+id/tv_ttlh"
+                    android:title="Thông tin liên hệ"/>
+
+            </menu>
+        </item>
+
+    </group>
+</menu>

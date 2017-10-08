@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#80000000"
+        android:orientation="vertical"
+        android:paddingLeft="130dp"
+        android:paddingRight="130dp"
+        android:paddingTop="40dp"
+        android:weightSum="1">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="40dp"
+            android:src="@drawable/iconbag" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Thế giới mua sắm trong tầm tay bạn"
+            android:textColor="#ffff" />
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/icongiohang" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Giao hàng tận nơi-Thanh toán dễ dàng"
+            android:textColor="#ffff" />
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/iconsecurity" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Bảo vệ người tiêu dùng"
+            android:textColor="#ffff" />
+
+
+    </LinearLayout>
+
+    <ImageView
+
+        android:id="@+id/imageView2"
+        android:layout_width="110dp"
+        android:layout_height="94dp"
+        android:layout_gravity="bottom|center"
+        android:layout_weight="0.14"
+        android:src="@drawable/iconamazon" />
+
+</FrameLayout>
