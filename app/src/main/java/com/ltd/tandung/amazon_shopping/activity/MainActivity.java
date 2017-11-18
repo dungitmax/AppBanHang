@@ -1,12 +1,17 @@
 package com.ltd.tandung.amazon_shopping.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,12 +19,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ViewFlipper;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -30,23 +35,25 @@ import com.ltd.tandung.amazon_shopping.DangNhap_DangKi.DangNhap;
 import com.ltd.tandung.amazon_shopping.R;
 import com.ltd.tandung.amazon_shopping.adapter.LoaispAdapter;
 import com.ltd.tandung.amazon_shopping.adapter.SanphamAdapter;
+import com.ltd.tandung.amazon_shopping.adapter.ViewPagerAdapter;
 import com.ltd.tandung.amazon_shopping.model.Giohang;
 import com.ltd.tandung.amazon_shopping.model.Loaisp;
 import com.ltd.tandung.amazon_shopping.model.Sanpham;
 import com.ltd.tandung.amazon_shopping.until.Server;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private final String TAG = getClass().getSimpleName();
+    private SearchView mSearchView;
     Toolbar toolbarManHinhChinh;
-    ViewFlipper viewFlipperManHinhChinh;
     RecyclerView recyclerViewManHinhChinh;
     NavigationView navigationViewManHinhChinh;
     ListView listViewManHinhChinh;
@@ -56,31 +63,136 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     LoaispAdapter loaispAdapter;
     ArrayList<Sanpham> listSanpham;
     SanphamAdapter sanphamAdapter;
+    ViewPager viewPager;
+    LinearLayout sliderDots;
+    int dotscount;
+    ImageView[] dots;
+    public static NavigationView navigationView;
+
     public static ArrayList<Giohang> mangGiohang;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        navigationView = (NavigationView) findViewById(R.id.navigationViewManHinhChinh);
+        View hView = navigationView.getHeaderView(0);
+        final ImageView imageView = (ImageView) hView.findViewById(R.id.image_Login);
+        final TextView textView = (TextView) hView.findViewById(R.id.txtDangNhap);
+        final TextView textView1 = (TextView) hView.findViewById(R.id.txtHienthiTen);
+        /*Intent intent = getIntent();
+        if (intent.getIntExtra("image", 1) != 1) {
+            imageView.setImageResource(intent.getIntExtra("image", 1));
+        }
+        if (intent.getStringExtra("text") != null) {
+            textView.setText(intent.getStringExtra("text"));
+        }*/
+        SharedPreferences preferences = getSharedPreferences("dangnhap", MODE_PRIVATE);
+        imageView.setImageResource(preferences.getInt("1", R.drawable.bt_dangnhap));
+        textView.setText(preferences.getString("b", "Đăng nhập"));
+        textView1.setText(preferences.getString("c", ""));
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = getIntent();
+                finish();
+                SharedPreferences settings = getSharedPreferences("dangnhap", MODE_PRIVATE);
+                settings.edit().clear().commit();
+                startActivity(intent);
+            }
+        });
+
+
         Anhxa();
         ActionBar();
-        ActionViewFlipper();
+        //ActionViewFlipper();
         GetdulieusanphamNEW();
         SetOnheader();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.navigationViewManHinhChinh);
+        ActionViewPagerIndicator();
         navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    private void ActionViewPagerIndicator() {
+        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(this);
+        viewPager.setAdapter(viewPagerAdapter);
+        dotscount = viewPagerAdapter.getCount();
+        dots = new ImageView[dotscount];
+        for (int i = 0; i < dotscount; i++) {
+            dots[i] = new ImageView(this);
+            dots[i].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.nonactive_dot));
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            params.setMargins(8, 0, 8, 0);
+            sliderDots.addView(dots[i], params);
+        }
+        dots[0].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.active_dot));
+
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+                for (int i = 0; i < dotscount; i++) {
+                    dots[i].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.nonactive_dot));
+                }
+
+                dots[position].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.active_dot));
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+        Timer timer = new Timer();
+        timer.scheduleAtFixedRate(new MyTimerTask(), 2000, 4000);
+    }
+
+    public class MyTimerTask extends TimerTask {
+
+        @Override
+        public void run() {
+
+            MainActivity.this.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+
+                    if (viewPager.getCurrentItem() == 0) {
+                        viewPager.setCurrentItem(1);
+                    } else if (viewPager.getCurrentItem() == 1) {
+                        viewPager.setCurrentItem(2);
+                    } else if (viewPager.getCurrentItem() == 2) {
+                        viewPager.setCurrentItem(3);
+                    } else if (viewPager.getCurrentItem() == 3) {
+                        viewPager.setCurrentItem(4);
+                    } else if (viewPager.getCurrentItem() == 4) {
+                        viewPager.setCurrentItem(5);
+                    } else {
+                        viewPager.setCurrentItem(0);
+                    }
+
+                }
+            });
+
+        }
     }
 
     private void SetOnheader() {
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigationViewManHinhChinh);
         View hView = navigationView.getHeaderView(0);
-        ImageView imageView = (ImageView) hView.findViewById(R.id.image_Login);
+        final ImageView imageView = (ImageView) hView.findViewById(R.id.image_Login);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, DangNhap.class);
                 startActivity(intent);
+
             }
         });
     }
@@ -140,28 +252,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         requestQueue.add(jsonArrayRequest);
     }
 
-    private void ActionViewFlipper() {
-        ArrayList<String> arrQuangCao = new ArrayList<>();
-        arrQuangCao.add("http://imageshack.com/a/img922/9155/iOkjSP.jpg");
-        arrQuangCao.add("http://imageshack.com/a/img924/9688/wDnccH.jpg");
-        arrQuangCao.add("http://imageshack.com/a/img924/3192/xYhjFh.jpg");
-        arrQuangCao.add("http://imageshack.com/a/img923/7789/Uwkrrk.png");
-        arrQuangCao.add("https://topy.info/wp-content/uploads/2016/07/Nh%E1%BB%AFng-cu%E1%BB%91n-s%C3%A1ch-hay-nh%E1%BA%A5t-m%E1%BB%8Di-th%E1%BB%9Di-%C4%91%E1%BA%A1i.jpeg");
-        for (int i = 0; i < arrQuangCao.size(); i++) {
-            ImageView imageView = new ImageView(getApplicationContext());
-            Picasso.with(getApplicationContext()).load(arrQuangCao.get(i)).into(imageView);
-            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-            viewFlipperManHinhChinh.addView(imageView);
-
-        }
-        viewFlipperManHinhChinh.setFlipInterval(5000);
-        viewFlipperManHinhChinh.setAutoStart(true);
-        Animation animationSlideIn = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_in_right);
-        Animation animationSlideOut = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_out_right);
-        viewFlipperManHinhChinh.setInAnimation(animationSlideIn);
-        viewFlipperManHinhChinh.setOutAnimation(animationSlideOut);
-    }
-
     private void ActionBar() {
         setSupportActionBar(toolbarManHinhChinh);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -177,11 +267,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void Anhxa() {
 
         toolbarManHinhChinh = (Toolbar) findViewById(R.id.toolbarManHinhChinh);
-        viewFlipperManHinhChinh = (ViewFlipper) findViewById(R.id.viewFlipperManHinhChinh);
+        // viewFlipperManHinhChinh = (ViewFlipper) findViewById(R.id.viewFlipperManHinhChinh);
         recyclerViewManHinhChinh = (RecyclerView) findViewById(R.id.recyclerViewManHinhChinh);
         navigationViewManHinhChinh = (NavigationView) findViewById(R.id.navigationViewManHinhChinh);
-        //listViewManHinhChinh = (ListView) findViewById(R.id.listViewManHinhChinh);
         drawerLayoutManHinhChinh = (DrawerLayout) findViewById(R.id.drawerLayoutManHinhChinh);
+        viewPager = (ViewPager) findViewById(R.id.viewPager);
+        sliderDots = (LinearLayout) findViewById(R.id.SliderDots);
 //        mangloaisp = new ArrayList<>();
 //        loaispAdapter = new LoaispAdapter(mangloaisp, getApplicationContext());
 //        listViewManHinhChinh.setAdapter(loaispAdapter);
@@ -191,12 +282,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         recyclerViewManHinhChinh.setHasFixedSize(true);
         recyclerViewManHinhChinh.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
         recyclerViewManHinhChinh.setAdapter(sanphamAdapter);
-
         if (mangGiohang != null) {
 
         } else {
             mangGiohang = new ArrayList<>();
-
         }
     }
 
@@ -209,7 +298,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Intent intent = new Intent(MainActivity.this, MainActivity.class);
             startActivity(intent);
         } else if (id == R.id.tv_tttk) {
-            Toast.makeText(this, "thong tin tk", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(MainActivity.this, Thongtintaikhoan.class);
+            startActivity(intent);
         } else if (id == R.id.tv_dmk) {
             Toast.makeText(this, "doi mk", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.tv_bhth) {
@@ -234,12 +324,34 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Intent intent = new Intent(MainActivity.this, DoDTActivity.class);
             startActivity(intent);
         } else if (id == R.id.tv_ttlh) {
-           Intent intent = new Intent(MainActivity.this, Thongtinlienhe.class);
-          startActivity(intent);
-       }
+            Intent intent = new Intent(MainActivity.this, Thongtinlienhe.class);
+            startActivity(intent);
+        }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawerLayoutManHinhChinh);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setTitle("THOÁT")
+                .setMessage("Bạn có chắc chắn thoát khỏi ứng dụng?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+//                        Intent homeIntent = new Intent(Intent.ACTION_MAIN);
+//                        homeIntent.addCategory( Intent.CATEGORY_HOME );
+//                        homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                        startActivity(homeIntent);
+                        finish();
+                    }
+
+                })
+                .setNegativeButton("No", null)
+                .show();
     }
 
 

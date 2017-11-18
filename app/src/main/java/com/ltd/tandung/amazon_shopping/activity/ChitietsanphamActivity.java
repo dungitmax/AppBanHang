@@ -23,7 +23,6 @@ public class ChitietsanphamActivity extends AppCompatActivity {
     ImageView img_sanpham;
     TextView txtTensanpham, txtGiasanpham, txtMotasp;
     Button btnThemSanPham;
-
     int id = 0;
     String Tenchitiet = "";
     int Giachitiet = 0;

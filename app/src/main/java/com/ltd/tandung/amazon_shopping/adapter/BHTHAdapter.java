@@ -14,7 +14,10 @@ import com.ltd.tandung.amazon_shopping.model.Sanpham;
 import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
+import java.text.Normalizer;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * Created by letandung on 04/10/2017.
@@ -24,13 +27,18 @@ public class BHTHAdapter extends BaseAdapter {
     Context context;
     int layout;
     List<Sanpham> listSanpham;
+    ArrayList<Sanpham> listTeam=new ArrayList<>();
 
-    public BHTHAdapter(Context context, int layout, List<Sanpham> listSanpham) {
-        this.context = context;
+    public BHTHAdapter(Context context, int layout, ArrayList<Sanpham> listSanpham) {
+
+
         this.layout = layout;
         this.listSanpham = listSanpham;
+        this.listTeam.addAll(listSanpham);
+        this.context = context;
     }
-//    public void AddListItemAdapter(ArrayList<Sanpham> item){
+
+    //    public void AddListItemAdapter(ArrayList<Sanpham> item){
 //        listSanpham.addAll(item);
 //        this.notifyDataSetChanged();
 //    }
@@ -79,5 +87,21 @@ public class BHTHAdapter extends BaseAdapter {
         Picasso.with(context).load(sanpham.getHinhanhsanpham()).placeholder(R.drawable.noimage)
                 .error(R.drawable.error).into(viewHolder.imgSanPham);
         return view;
+    }
+
+    public void Filter(String text) {
+        listSanpham.clear();
+        for (Sanpham sanpham : listTeam) {
+            if (removeAccent(sanpham.getTensanpham().toLowerCase()).contains(removeAccent(text.trim().toLowerCase()))) {
+                listSanpham.add(sanpham);
+            }
+        }
+        notifyDataSetChanged();
+    }
+    public static String removeAccent(String s) {
+
+        String temp = Normalizer.normalize(s, Normalizer.Form.NFD);
+        Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
+        return pattern.matcher(temp).replaceAll("");
     }
 }

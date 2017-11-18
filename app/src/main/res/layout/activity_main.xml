@@ -21,15 +21,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="@color/colorPrimary"
-                app:title="Trang chủ">
-            </android.support.v7.widget.Toolbar>
+                app:title="Trang chủ"></android.support.v7.widget.Toolbar>
 
-            <ViewFlipper
-                android:id="@+id/viewFlipperManHinhChinh"
+            <!--<ViewFlipper-->
+            <!--android:id="@+id/viewFlipperManHinhChinh"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="172dp"></ViewFlipper>-->
+            <android.support.v4.view.ViewPager
+                android:id="@+id/viewPager"
                 android:layout_width="match_parent"
-                android:layout_height="172dp">
+                android:layout_height="208dp"></android.support.v4.view.ViewPager>
 
-            </ViewFlipper>
+            <LinearLayout
+                android:id="@+id/SliderDots"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/red"
+                android:gravity="center_horizontal|center_vertical"
+                android:orientation="horizontal"></LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

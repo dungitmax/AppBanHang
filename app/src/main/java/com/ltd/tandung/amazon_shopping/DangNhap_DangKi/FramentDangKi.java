@@ -41,6 +41,10 @@ public class FramentDangKi extends Fragment implements View.OnClickListener, Vie
     boolean kiemtra = false;
     String textGT = "";
 
+    public void getJSon() {
+
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -97,6 +101,7 @@ public class FramentDangKi extends Fragment implements View.OnClickListener, Vie
                             boolean success = object.getBoolean("success");
                             if (success) {
                                 Intent intent = new Intent(getActivity(), DangNhap.class);
+                                Toast.makeText(getActivity(), "Dang ki thanh cong", Toast.LENGTH_SHORT).show();
                                 startActivity(intent);
                             } else {
                                 Toast.makeText(getActivity(), "Đăng kí thất bại!", Toast.LENGTH_SHORT).show();
@@ -125,8 +130,9 @@ public class FramentDangKi extends Fragment implements View.OnClickListener, Vie
 
     private void btnDangKi() {
         String name = edtHoten.getText().toString();
-        String email = edtUsername.getText().toString();
+        String username = edtUsername.getText().toString();
         String password = edtPassword.getText().toString();
+
     }
 
     @Override
@@ -156,6 +162,10 @@ public class FramentDangKi extends Fragment implements View.OnClickListener, Vie
                         input_editUsername.setError("Bạn chưa nhâp tài khoản !");
                         kiemtra = false;
 
+//                    } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(chuoi).matches()) {
+//                        input_editUsername.setErrorEnabled(true);
+//                        input_editUsername.setError(" Username không hợp lệ !");
+//                        kiemtra = false;
                     } else {
                         input_editUsername.setErrorEnabled(false);
                         input_editUsername.setError("");

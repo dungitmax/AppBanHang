@@ -84,7 +84,7 @@
                 android:id="@+id/txtMuasau"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Mua Sau"
+                android:text="Xóa"
                 android:textColor="#1abef1"
                 android:gravity="right"
 

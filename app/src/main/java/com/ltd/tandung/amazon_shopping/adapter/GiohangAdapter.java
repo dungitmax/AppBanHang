@@ -57,10 +57,12 @@ public class GiohangAdapter extends BaseAdapter {
         public Button btn_giam, btn_tang;
 
     }
-    public void deleteItem (int position) {
+
+    public void deleteItem(int position) {
         MainActivity.mangGiohang.remove(position);
         notifyDataSetChanged();
     }
+
     @Override
     public View getView(final int position, View view, ViewGroup parent) {
         ViewHolder viewHolder = null;
@@ -91,20 +93,20 @@ public class GiohangAdapter extends BaseAdapter {
         viewHolder.txtMuasau.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               AlertDialog.Builder builder=new AlertDialog.Builder(context);
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setTitle("Xác nhận xóa sản phẩm");
                 builder.setMessage("Bạn có chắc chắn muốn xóa sản phẩm này ?");
                 builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        if (MainActivity.mangGiohang.size()<=0){
+                        if (MainActivity.mangGiohang.size() <= 0) {
                             txtThongBao.setVisibility(View.VISIBLE);
-                        }else {
+                        } else {
                             deleteItem(position);
                             GiohangActivity.GetDuLieuLV();
-                            if (MainActivity.mangGiohang.size()<=0){
+                            if (MainActivity.mangGiohang.size() <= 0) {
                                 txtThongBao.setVisibility(View.VISIBLE);
-                            }else {
+                            } else {
                                 txtThongBao.setVisibility(View.INVISIBLE);
                             }
                         }
@@ -113,7 +115,7 @@ public class GiohangAdapter extends BaseAdapter {
                 builder.setNegativeButton("Không", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        GiohangAdapter giohangAdapter=new GiohangAdapter(context,MainActivity.mangGiohang);
+                        GiohangAdapter giohangAdapter = new GiohangAdapter(context, MainActivity.mangGiohang);
                         giohangAdapter.notifyDataSetChanged();
                         GiohangActivity.GetDuLieuLV();
                     }
@@ -140,7 +142,7 @@ public class GiohangAdapter extends BaseAdapter {
                 long giamoinhat = (giaht * slmoi) / slhientai;
                 MainActivity.mangGiohang.get(position).setGiasp((int) giamoinhat);
                 DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
-                finalViewHolder.tv_gia.setText("Giá: " + decimalFormat.format(giamoinhat) + " Đ");
+//                finalViewHolder.tv_gia.setText("Giá: " + decimalFormat.format(giamoinhat) + " Đ");
                 GiohangActivity.GetDuLieuLV();
                 finalViewHolder.txtSoluong.setText(String.valueOf(slmoi));
                 if (slmoi <= 1) {
@@ -165,7 +167,7 @@ public class GiohangAdapter extends BaseAdapter {
                 long giamoinhat = (giaht * slmoi) / slhientai;
                 MainActivity.mangGiohang.get(position).setGiasp((int) giamoinhat);
                 DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
-                finalViewHolder.tv_gia.setText("Giá: " + decimalFormat.format(giamoinhat) + " Đ");
+//                finalViewHolder.tv_gia.setText("Giá: " + decimalFormat.format(giamoinhat) + " Đ");
                 GiohangActivity.GetDuLieuLV();
                 finalViewHolder.txtSoluong.setText(String.valueOf(slmoi));
                 finalViewHolder.txtSoluong.setText(String.valueOf(slmoi));

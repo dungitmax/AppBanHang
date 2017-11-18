@@ -1,19 +1,24 @@
 package com.ltd.tandung.amazon_shopping.activity;
 
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -30,6 +35,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class BHTTActivity extends AppCompatActivity {
     Toolbar toolbarBHTT;
@@ -42,7 +49,7 @@ public class BHTTActivity extends AppCompatActivity {
     boolean isLoading = false;
     boolean limitdata = false;
     mHandler mHandler;
-    int page=0;
+    int page = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,9 +57,48 @@ public class BHTTActivity extends AppCompatActivity {
         setContentView(R.layout.activity_bhtt);
         Anhxa();
         Actiontoolbar();
-        GetData(urlGetdata,page);
+        GetData(urlGetdata, page);
         LoadMoreData();
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menugiohang, menu);
+        MenuItem searchItem = menu.findItem(R.id.search_view);
+        SearchManager searchManager = (SearchManager) BHTTActivity.this.getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = null;
+        if (searchManager != null) {
+            searchView = (SearchView) searchItem.getActionView();
+        }
+        if (searchView != null) {
+            searchView.setSearchableInfo(searchManager.getSearchableInfo(BHTTActivity.this.getComponentName()));
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+
+                    return false;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    bhthAdapter.Filter(newText);
+                    lvBHTT.invalidate();
+                    return true;
+                }
+            });
+
+        }
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.menugiohang) {
+            Intent intent = new Intent(getApplicationContext(), GiohangActivity.class);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void LoadMoreData() {
@@ -72,8 +118,9 @@ public class BHTTActivity extends AppCompatActivity {
 
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                if (view.getLastVisiblePosition()==totalItemCount-1 && totalItemCount != 0 && isLoading == false && limitdata == false) {
+                if (view.getLastVisiblePosition() == totalItemCount - 1 && totalItemCount != 0 && isLoading == false && limitdata == false) {
                     isLoading = true;
+
                     ThredData thredData = new ThredData();
                     thredData.start();
                 }
@@ -81,7 +128,7 @@ public class BHTTActivity extends AppCompatActivity {
         });
     }
 
-    private void GetData(String url,int page) {
+    private void GetData(String url, final int page) {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
@@ -102,6 +149,8 @@ public class BHTTActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }
                     }
+                    bhthAdapter = new BHTHAdapter(getApplicationContext(), R.layout.custom_dong_sanpham, mangdhth);
+                    lvBHTT.setAdapter(bhthAdapter);
                     bhthAdapter.notifyDataSetChanged();
                 } else {
                     limitdata = true;
@@ -116,7 +165,14 @@ public class BHTTActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
 
             }
-        });
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> stringMap = new HashMap<String, String>();
+                stringMap.put("limit", page + "");
+                return stringMap;
+            }
+        };
         requestQueue.add(jsonArrayRequest);
     }
 
@@ -136,8 +192,7 @@ public class BHTTActivity extends AppCompatActivity {
         toolbarBHTT = (Toolbar) findViewById(R.id.toolbarBHTT);
         lvBHTT = (ListView) findViewById(R.id.lvBHTT);
         mangdhth = new ArrayList<>();
-        bhthAdapter = new BHTHAdapter(this, R.layout.custom_dong_sanpham, mangdhth);
-        lvBHTT.setAdapter(bhthAdapter);
+
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         footerview = inflater.inflate(R.layout.loadmore, null);
         mHandler = new mHandler();
@@ -152,7 +207,7 @@ public class BHTTActivity extends AppCompatActivity {
                     lvBHTT.addFooterView(footerview);
                     break;
                 case 1:
-                    GetData(urlGetdata,++page);
+                    GetData(urlGetdata, ++page);
                     isLoading = false;
                     break;
             }

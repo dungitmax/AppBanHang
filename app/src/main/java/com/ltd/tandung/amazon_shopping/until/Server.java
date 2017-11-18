@@ -5,10 +5,10 @@ package com.ltd.tandung.amazon_shopping.until;
  */
 
 public class Server {
-    //public static String localhost = "http://192.168.1.2";
-    //public static String localhost = "http://192.168.1.90";
-//    public static String localhost = "http://192.168.1.18";
-   public static String localhost = "http://192.168.11.102";
+    //public static String localhost = "http://192.168.43.56";//du
+    //public static String localhost = "http://192.168.43.2";//chien
+    //public static String localhost = "http://172.16.200.34";//chien
+    public static String localhost = "http://192.168.1.2";//nha
     public static String Duongdanloaisp = localhost + "/serverappbanhang/getloaisanpham.php";
     public static String Duongdansanphammoinhat = localhost + "/serverappbanhang/getsanphammoinhat.php";
     public static String Duongdansanphambhth = localhost + "/serverappbanhang/getsanphambhth.php";
@@ -20,5 +20,8 @@ public class Server {
     public static String Duongdansanphamelectronic = localhost + "/serverappbanhang/getsanphamelectronic.php";
     public static String DuongdanLogin = localhost + "/serverappbanhang/login.php";
     public static String DuongdanRegister = localhost + "/serverappbanhang/register.php";
+    public static String Duongdantaikhoan = localhost + "/serverappbanhang/gettaikhoan.php";
+    public static String Duongdandonhang = localhost + "/serverappbanhang/Thongtinkhachhang.php";
+    public static String Duongdanchitietdonhang = localhost + "/serverappbanhang/chitietdonhang.php";
 
 }

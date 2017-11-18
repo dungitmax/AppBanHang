@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_header"
     android:layout_width="match_parent"
-    android:layout_height="150.0dp"
+    android:layout_height="150dp"
     android:gravity="bottom"
     android:orientation="vertical">
 
@@ -24,9 +24,10 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1">
 
+
                 <LinearLayout
                     android:id="@+id/layout_Login"
-                    android:layout_width="wrap_content"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:clickable="true"
@@ -35,8 +36,8 @@
 
                     <ImageView
                         android:id="@+id/image_Login"
-                        android:layout_width="50.0dp"
-                        android:layout_height="50.0dp"
+                        android:layout_width="70.0dp"
+                        android:layout_height="70.0dp"
                         android:layout_gravity="center_horizontal"
                         android:layout_weight="0.10"
                         android:clickable="true"
@@ -47,9 +48,20 @@
                     </ImageView>
 
                     <TextView
+                        android:id="@+id/txtHienthiTen"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="false"
+                        android:gravity="center_horizontal"
+                        android:textColor="@color/red"
+                        android:textSize="15.0dp" />
+
+                    <TextView
+                        android:id="@+id/txtDangNhap"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="15.0dp"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="5dp"
                         android:clickable="false"
                         android:text="Đăng nhập"
                         android:textColor="@color/white"
